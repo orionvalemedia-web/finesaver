@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="dashboard">
+  <div class="dash-header">
+    <div>
+      <p class="dash-greeting">Hello, {{ user.name.split()[0] }}</p>
+      {% if vehicle %}
+      <div class="plate-badge">{{ vehicle.plate }}</div>
+      {% else %}
+      <p style="color:var(--muted);font-size:.9rem">No vehicle registered.</p>
+      {% endif %}
+    </div>
+    <form method="post" action="/logout">
+      <button type="submit" class="btn btn-ghost">Log out</button>
+    </form>
+  </div>
+
+  <!-- Active Alerts -->
+  <p class="dash-section-label">Active Alerts</p>
+
+  {% if active_alerts %}
+  <ul class="alert-list">
+    {% for alert in active_alerts %}
+    <li class="alert-item">
+      <div class="alert-info">
+        <span class="alert-issue">{{ issue_labels.get(alert.issue, alert.issue) }}</span>
+        {% if alert.note %}
+        <span class="alert-note">{{ alert.note }}</span>
+        {% endif %}
+        <span class="alert-time">{{ alert.timestamp.strftime("%b %d, %Y · %I:%M %p") }}</span>
+      </div>
+      <form method="post" action="/resolve/{{ alert.id }}">
+        <button type="submit" class="btn-resolve">Mark Resolved</button>
+      </form>
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <div class="empty-state">
+    <div class="empty-icon">✅</div>
+    <p>No active alerts — you're all clear.</p>
+  </div>
+  {% endif %}
+
+  <!-- Resolved Alerts -->
+  {% if resolved_alerts %}
+  <p class="dash-section-label dash-section-label-resolved">Resolved</p>
+  <ul class="alert-list">
+    {% for alert in resolved_alerts %}
+    <li class="alert-item alert-item-resolved">
+      <div class="alert-info">
+        <span class="alert-issue">{{ issue_labels.get(alert.issue, alert.issue) }}</span>
+        {% if alert.note %}
+        <span class="alert-note">{{ alert.note }}</span>
+        {% endif %}
+        <span class="alert-time">{{ alert.timestamp.strftime("%b %d, %Y · %I:%M %p") }}</span>
+      </div>
+      <span class="resolved-badge">Resolved</span>
+    </li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+
+</div>
+{% endblock %}

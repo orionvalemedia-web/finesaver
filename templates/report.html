@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <div class="form-header">
+    <h2>Report a vehicle</h2>
+    <p>Help a fellow driver know something is wrong with their car.</p>
+  </div>
+
+  <form method="post" action="/report">
+    <div class="field">
+      <label for="plate">License Plate</label>
+      <input class="input-plate" type="text" id="plate" name="plate" required
+             placeholder="ABC 1234" autocomplete="off" autocapitalize="characters"
+             oninput="this.value=this.value.toUpperCase()" />
+    </div>
+
+    <div class="field">
+      <label>What's the issue?</label>
+      <div class="issue-grid">
+        <label class="issue-btn">
+          <input type="radio" name="issue" value="taillight_out" required />
+          <span><span class="issue-icon">🔴</span>Taillight Out</span>
+        </label>
+        <label class="issue-btn">
+          <input type="radio" name="issue" value="headlight_out" />
+          <span><span class="issue-icon">💡</span>Headlight Out</span>
+        </label>
+        <label class="issue-btn">
+          <input type="radio" name="issue" value="gas_cap_open" />
+          <span><span class="issue-icon">⛽</span>Gas Cap Open</span>
+        </label>
+        <label class="issue-btn">
+          <input type="radio" name="issue" value="tire_issue" />
+          <span><span class="issue-icon">⚠️</span>Tire Issue</span>
+        </label>
+        <label class="issue-btn">
+          <input type="radio" name="issue" value="door_trunk_open" />
+          <span><span class="issue-icon">🚪</span>Door / Trunk Open</span>
+        </label>
+        <label class="issue-btn">
+          <input type="radio" name="issue" value="something_dragging" />
+          <span><span class="issue-icon">🔧</span>Something Dragging</span>
+        </label>
+        <label class="issue-btn issue-btn-other">
+          <input type="radio" name="issue" value="other" id="issue-other" />
+          <span><span class="issue-icon">✏️</span>Other</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="field other-note-field" id="other-note-wrap" style="display:none">
+      <label for="note">Describe the issue <span class="optional">(max 100 chars)</span></label>
+      <input type="text" id="note" name="note" maxlength="100"
+             placeholder="Briefly describe what you saw..." />
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-full">Submit Report</button>
+  </form>
+</div>
+
+<script>
+  document.querySelectorAll('input[name="issue"]').forEach(function(radio) {
+    radio.addEventListener('change', function() {
+      var wrap = document.getElementById('other-note-wrap');
+      var noteInput = document.getElementById('note');
+      if (this.value === 'other') {
+        wrap.style.display = 'flex';
+        noteInput.required = true;
+      } else {
+        wrap.style.display = 'none';
+        noteInput.required = false;
+        noteInput.value = '';
+      }
+    });
+  });
+</script>
+{% endblock %}

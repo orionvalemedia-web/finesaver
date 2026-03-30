@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FineSaver</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <nav class="nav">
+    <a class="nav-brand" href="/">
+      <span class="nav-brand-icon">F</span>
+      FineSaver
+    </a>
+    <div class="nav-links">
+      <a href="/quick">Quick Report</a>
+      <a href="/report">Report</a>
+      <a href="/dashboard">Dashboard</a>
+    </div>
+  </nav>
+
+  <main class="container {% block container_class %}{% endblock %}">
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

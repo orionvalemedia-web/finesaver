@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block container_class %}container-wide{% endblock %}
+{% block content %}
+<div class="quick-wrap">
+  <div class="quick-header">
+    <h2>Quick Report</h2>
+    <p>Fast reporting for on-the-go use.</p>
+  </div>
+
+  <form method="post" action="/quick" class="quick-form">
+    <input
+      class="quick-plate-input"
+      type="text"
+      name="plate"
+      required
+      placeholder="Enter plate..."
+      autocomplete="off"
+      autocapitalize="characters"
+      oninput="this.value=this.value.toUpperCase()"
+    />
+
+    <div class="quick-issue-grid">
+      <label class="quick-issue-btn">
+        <input type="radio" name="issue" value="taillight_out" required />
+        <span><span class="quick-icon">🔴</span><span>Taillight Out</span></span>
+      </label>
+      <label class="quick-issue-btn">
+        <input type="radio" name="issue" value="headlight_out" />
+        <span><span class="quick-icon">💡</span><span>Headlight Out</span></span>
+      </label>
+      <label class="quick-issue-btn">
+        <input type="radio" name="issue" value="gas_cap_open" />
+        <span><span class="quick-icon">⛽</span><span>Gas Cap Open</span></span>
+      </label>
+      <label class="quick-issue-btn">
+        <input type="radio" name="issue" value="tire_issue" />
+        <span><span class="quick-icon">⚠️</span><span>Tire Issue</span></span>
+      </label>
+      <label class="quick-issue-btn">
+        <input type="radio" name="issue" value="door_trunk_open" />
+        <span><span class="quick-icon">🚪</span><span>Door / Trunk Open</span></span>
+      </label>
+      <label class="quick-issue-btn">
+        <input type="radio" name="issue" value="something_dragging" />
+        <span><span class="quick-icon">🔧</span><span>Something Dragging</span></span>
+      </label>
+      <label class="quick-issue-btn quick-issue-other">
+        <input type="radio" name="issue" value="other" id="quick-other" />
+        <span><span class="quick-icon">✏️</span><span>Other</span></span>
+      </label>
+    </div>
+
+    <div id="quick-note-wrap" style="display:none">
+      <input
+        class="quick-note-input"
+        type="text"
+        id="quick-note"
+        name="note"
+        maxlength="100"
+        placeholder="Describe the issue (max 100 chars)..."
+      />
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-full quick-submit">Send Report</button>
+  </form>
+</div>
+
+<script>
+  document.querySelectorAll('.quick-issue-btn input[type="radio"]').forEach(function(radio) {
+    radio.addEventListener('change', function() {
+      var wrap = document.getElementById('quick-note-wrap');
+      var noteInput = document.getElementById('quick-note');
+      if (this.value === 'other') {
+        wrap.style.display = 'block';
+        noteInput.required = true;
+      } else {
+        wrap.style.display = 'none';
+        noteInput.required = false;
+        noteInput.value = '';
+      }
+    });
+  });
+</script>
+{% endblock %}

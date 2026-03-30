@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <div class="form-header">
+    <h2>Welcome back</h2>
+    <p>Log in to view your alerts.</p>
+  </div>
+
+  {% if error %}
+  <div class="alert-error">{{ error }}</div>
+  {% endif %}
+
+  <form method="post" action="/login">
+    <div class="field">
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required placeholder="jane@example.com" />
+    </div>
+    <div class="field">
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" required placeholder="••••••••" />
+    </div>
+    <button type="submit" class="btn btn-primary btn-full">Log In</button>
+  </form>
+
+  <p class="form-footer">New here? <a href="/register">Register your vehicle</a></p>
+</div>
+{% endblock %}
