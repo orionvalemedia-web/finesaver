@@ -5,3 +5,4 @@ jinja2
 python-multipart
 passlib[bcrypt]
 bcrypt<4.0.0
+itsdangerous
